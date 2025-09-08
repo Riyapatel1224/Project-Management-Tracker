@@ -1,13 +1,17 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="com.util.DBConnection"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*, com.util.DBConnection" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard - Project Management Tracker</title>
-    <style>
-        body {
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+      body {
             margin: 0;
             padding: 0;
             font-family: "Segoe UI", Arial, sans-serif;
@@ -23,8 +27,8 @@
             padding: 2rem 2.5rem;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            width: 85%;
-            max-width: 1100px;
+            width: 80%;
+            max-width: 1000px;
             text-align: center;
         }
 
@@ -74,7 +78,6 @@
         .btn:hover {
             background: #17a673;
         }
-
         .delete-btn {
             background: #e74a3b;
             color: white;
@@ -88,10 +91,12 @@
         .delete-btn:hover {
             background: #c0392b;
         }
+
+       
     </style>
-</head>
+
 <body>
-    <div class="container">
+	    <div class="container">
         <h1>Admin Dashboard</h1>
         <p>All registered users (excluding Admins):</p>
 
@@ -102,7 +107,7 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Action</th>
+                <th>Delete</th>
             </tr>
 
             <%
@@ -111,17 +116,17 @@
                     ResultSet rs = pstmt.executeQuery();
 
                     while (rs.next()) {
-                        int userId = rs.getInt("id");
+                    	int userid = rs.getInt("id");
             %>
                         <tr>
-                            <td><%= userId %></td>
+                            <td><%= rs.getInt("id") %></td>
                             <td><%= rs.getString("firstName") %></td>
                             <td><%= rs.getString("lastName") %></td>
                             <td><%= rs.getString("email") %></td>
                             <td><%= rs.getString("role") %></td>
                             <td>
                                 <form action="DeleteUserController" method="post" style="display:inline;">
-                                    <input type="hidden" name="userId" value="<%= userId %>">
+                                    <input type="hidden" name="userid" value="<%= userid %>">
                                     <button type="submit" class="delete-btn">Delete</button>
                                 </form>
                             </td>
@@ -129,14 +134,16 @@
             <%
                     }
                 } catch (Exception e) {
-                    out.println("<tr><td colspan='6'>Error fetching users: " + e.getMessage() + "</td></tr>");
+                    out.println("<tr><td colspan='5'>Error fetching users: " + e.getMessage() + "</td></tr>");
                 }
             %>
         </table>
 
         <form action="LogoutController" method="post">
-            <button type="submit" class="btn">Logout</button>
+            <button type="submit"  class="btn">Logout</button>
         </form>
     </div>
+	
+	
 </body>
 </html>

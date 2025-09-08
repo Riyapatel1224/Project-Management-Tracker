@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet {
 
         boolean isError = false;
 
-        // 🔹 Basic validation
+
         if (email == null || email.trim().isEmpty()) {
             isError = true;
             request.setAttribute("emailError", "Email is required");
@@ -74,7 +74,42 @@ public class LoginController extends HttpServlet {
                 if ("admin".equalsIgnoreCase(role)) {
                     RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
                     rd.forward(request, response);
-                } else {
+                }
+                else if("manager".equalsIgnoreCase(role)) {
+                	 RequestDispatcher rd = request.getRequestDispatcher("manager.jsp");
+                     rd.forward(request, response);
+                }
+                else if("frontend".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("frontend.jsp");
+                    rd.forward(request, response);
+                }
+                else if("backend".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("backend.jsp");
+                    rd.forward(request, response);
+                }
+                else if("devops".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("devops.jsp");
+                    rd.forward(request, response);
+                }
+                else if("fullstack".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("fullstack.jsp");
+                    rd.forward(request, response);
+                }
+                else if("database administrator".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("databaseAdministrator.jsp");
+                    rd.forward(request, response);
+                }
+                else if("qa/engineer".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("qa/engineer.jsp");
+                    rd.forward(request, response);
+                }
+                else if("ui/ux".equalsIgnoreCase(role)) {
+                	RequestDispatcher rd = request.getRequestDispatcher("uiux.jsp");
+                    rd.forward(request, response);
+                }
+                
+               
+                else {
                     RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
                     rd.forward(request, response);
                 }
