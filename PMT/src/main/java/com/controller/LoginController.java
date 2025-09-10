@@ -24,6 +24,8 @@ public class LoginController extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        
+        
 
         boolean isError = false;
 
@@ -70,49 +72,52 @@ public class LoginController extends HttpServlet {
                     return;
                 }
 
+                if (dbPassword.equals(password)) {
+                    // Set session attributes
+                    request.getSession().setAttribute("userLoggedIn", true);
+                    request.getSession().setAttribute("userRole", role);  // Save user role in session
 
-                if ("admin".equalsIgnoreCase(role)) {
-                    RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-                    rd.forward(request, response);
+                    if ("admin".equalsIgnoreCase(role)) {
+                        response.sendRedirect("admin.jsp");
+                    }
+                    
+                    else if ("manager".equalsIgnoreCase(role)) {
+                        response.sendRedirect("manager.jsp");
+                    }
+                    
+                    else if ("frontend".equalsIgnoreCase(role)) {
+                        response.sendRedirect("frontend.jsp");
+                    }
+                    
+                    else if ("backend".equalsIgnoreCase(role)) {
+                        response.sendRedirect("backend.jsp");
+                    }
+                    
+                    else if ("devops".equalsIgnoreCase(role)) {
+                        response.sendRedirect("devops.jsp");
+                    }
+                    
+                    else if ("fullstack".equalsIgnoreCase(role)) {
+                        response.sendRedirect("fullstack.jsp");
+                    }
+                    
+                    else if ("database administrator".equalsIgnoreCase(role)) {
+                        response.sendRedirect("databaseAdministrator.jsp");
+                    }
+                    
+                    else if ("qa/engineer".equalsIgnoreCase(role)) {
+                        response.sendRedirect("qaEngineer.jsp");
+                    }
+                    
+                    else if ("ui/ux".equalsIgnoreCase(role)) {
+                        response.sendRedirect("uiux.jsp");
+                    }
+                    
+                    else {
+                        response.sendRedirect("Login.jsp");
+                    }
                 }
-                else if("manager".equalsIgnoreCase(role)) {
-                	 RequestDispatcher rd = request.getRequestDispatcher("manager.jsp");
-                     rd.forward(request, response);
-                }
-                else if("frontend".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("frontend.jsp");
-                    rd.forward(request, response);
-                }
-                else if("backend".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("backend.jsp");
-                    rd.forward(request, response);
-                }
-                else if("devops".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("devops.jsp");
-                    rd.forward(request, response);
-                }
-                else if("fullstack".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("fullstack.jsp");
-                    rd.forward(request, response);
-                }
-                else if("database administrator".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("databaseAdministrator.jsp");
-                    rd.forward(request, response);
-                }
-                else if("qa/engineer".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("qa/engineer.jsp");
-                    rd.forward(request, response);
-                }
-                else if("ui/ux".equalsIgnoreCase(role)) {
-                	RequestDispatcher rd = request.getRequestDispatcher("uiux.jsp");
-                    rd.forward(request, response);
-                }
-                
-               
-                else {
-                    RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
-                    rd.forward(request, response);
-                }
+
             }
 
         } catch (SQLException e) {

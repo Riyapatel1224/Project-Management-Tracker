@@ -1,9 +1,6 @@
 package com.controller;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,13 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/LogoutController")
-public class LogoutController extends HttpServlet{
-	
+public class LogoutController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-        rd.forward(request, response);
-		
-	}
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+
+    	
+        request.getSession().invalidate();
+        
+      
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        //meta refresh to redirect and clear history
+        response.getWriter().println("<html><head><meta http-equiv='refresh' content='0;URL=Login.jsp'></head><body></body></html>");
+    }
 }

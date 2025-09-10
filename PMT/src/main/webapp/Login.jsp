@@ -4,6 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Project Management Tracker - Login</title>
+    <script>
+	    history.pushState(null, null, location.href);
+	    window.onpopstate = function () {
+	        history.go(1);
+	    };
+	</script>
+	
+	<%--for stubborn brower to prevent caching  --%>
+	
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	
+    
+    <%
+    
+		//prevent caching 
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		//no-cache : Don’t serve from cache without rechecking with the server.
+		//no-store: Don’t store any copy of this page at all.
+		//must-revalidate : Always check with the server before showing the page.
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
+		//Means the page is already expired
+		
+		
+		
+		if(session!=null){
+			//Check if the user is logged in succesfully 
+			Boolean loggedIn = (Boolean) session.getAttribute("userLoggedIn");
+			String role = (String) session.getAttribute("userRole");
+			
+			if (loggedIn != null && loggedIn) {
+				if ("admin".equalsIgnoreCase(role)) {
+		            response.sendRedirect("admin.jsp");
+		        } else if ("manager".equalsIgnoreCase(role)) {
+		            response.sendRedirect("manager.jsp");
+		        } else if ("frontend".equalsIgnoreCase(role)) {
+		            response.sendRedirect("frontend.jsp");
+		        } else if ("backend".equalsIgnoreCase(role)) {
+		            response.sendRedirect("backend.jsp");
+		        } else if ("devops".equalsIgnoreCase(role)) {
+		            response.sendRedirect("devops.jsp");
+		        } else if ("fullstack".equalsIgnoreCase(role)) {
+		            response.sendRedirect("fullstack.jsp");
+		        } else if ("database administrator".equalsIgnoreCase(role)) {
+		            response.sendRedirect("databaseAdministrator.jsp");
+		        } else if ("qa/engineer".equalsIgnoreCase(role)) {
+		            response.sendRedirect("qaEngineer.jsp");
+		        } else if ("ui/ux".equalsIgnoreCase(role)) {
+		            response.sendRedirect("uiux.jsp");
+		        }
+		        return;
+		    }
+		}
+		
+		
+	%>
+    
+    
     <style>
         body {
             margin: 0;
@@ -101,6 +161,9 @@
     </style>
 </head>
 <body>
+
+	
+
     <div class="container">
         <h1>Project Management Tracker</h1>
         <form action="LoginController" method="post">

@@ -44,19 +44,24 @@
             color: #555;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 0.7rem;
             border-radius: 8px;
             border: 1px solid #ccc;
             font-size: 0.95rem;
             transition: border-color 0.2s;
+            box-sizing: border-box;
         }
 
-        input:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #4e73df;
             box-shadow: 0 0 5px rgba(78, 115, 223, 0.3);
+        }
+
+        select {
+            height: 2.5rem;
         }
 
         .btn {
@@ -92,18 +97,38 @@
             text-decoration: underline;
         }
 
-
         .error {
             color: #e74a3b;
             font-size: 0.8rem;
             margin-top: 0.3rem;
         }
     </style>
+    
+    <script type="text/javascript">
+    
+	    // Disable back button
+	    history.pushState(null, null, location.href);
+	    window.onpopstate = function () {
+	        history.go(1);
+	    };
+	    
+	</script>
+    
 </head>
 <body>
+	
+		<%
+		
+			response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+		    response.setHeader("Pragma","no-cache");
+		    response.setDateHeader("Expires",0);
+		    
+
+		%>
     <div class="container">
         <h1>Project Management Tracker</h1>
         <form action="SignupController" method="post">
+
             <div class="form-group">
                 <label for="fname">First Name</label>
                 <input type="text" id="fname" name="firstName" value="<%= request.getParameter("firstName") != null ? request.getParameter("firstName") : "" %>">
@@ -123,6 +148,22 @@
             </div>
 
             <div class="form-group">
+                <label for="role">Select Role</label>
+                <select id="role" name="role">
+                    <option value="">-- Select Role --</option>
+                    <option value="frontend" <%= "frontend".equals(request.getParameter("role")) ? "selected" : "" %>>Frontend Developer</option>
+                    <option value="backend" <%= "backend".equals(request.getParameter("role")) ? "selected" : "" %>>Backend Developer</option>
+                    <option value="fullstack" <%= "fullstack".equals(request.getParameter("role")) ? "selected" : "" %>>Full Stack Developer</option>
+                    <option value="devops" <%= "devops".equals(request.getParameter("role")) ? "selected" : "" %>>DevOps Engineer</option>
+                    <option value="dba" <%= "dba".equals(request.getParameter("role")) ? "selected" : "" %>>Database Administrator</option>
+                    <option value="qa" <%= "qa".equals(request.getParameter("role")) ? "selected" : "" %>>QA Engineer</option>
+                    <option value="uiux" <%= "uiux".equals(request.getParameter("role")) ? "selected" : "" %>>UI/UX Designer</option>
+                    <option value="manager" <%= "manager".equals(request.getParameter("role")) ? "selected" : "" %>>Manager</option>
+                </select>
+                <p class="error"><%= request.getAttribute("roleError") != null ? request.getAttribute("roleError") : "" %></p>
+            </div>
+
+            <div class="form-group">
                 <label for="pass">Password</label>
                 <input type="password" id="pass" name="password">
                 <p class="error"><%= request.getAttribute("passwordError") != null ? request.getAttribute("passwordError") : "" %></p>
@@ -133,6 +174,7 @@
             <div class="already">
                 Already have an account? <a href="Login.jsp">Login</a>
             </div>
+
         </form>
     </div>
 </body>

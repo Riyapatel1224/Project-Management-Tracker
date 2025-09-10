@@ -94,8 +94,38 @@
 
        
     </style>
+    
+    <%--for stubborn browser to prevent caching  --%>
+	
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    
+    <%
+    
+    
+			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+			response.setHeader("Pragma", "no-cache");
+			response.setDateHeader("Expires", 0);
+			    
+		    if (session == null || session.getAttribute("userLoggedIn") == null) {
+		        response.sendRedirect("Login.jsp");
+		        return;
+		    }
+    
+		
+		    String role = (String) session.getAttribute("userRole");
+		    if (!"admin".equalsIgnoreCase(role)) {
+		        response.sendRedirect("Login.jsp");
+		        return;
+		    }
+		    
+		   
+	%>
 
 <body>
+
+		
 	    <div class="container">
         <h1>Admin Dashboard</h1>
         <p>All registered users (excluding Admins):</p>
