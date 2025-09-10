@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.cj.Session;
 import com.util.DBConnection;
 
 @WebServlet("/SignupController")
@@ -28,6 +29,7 @@ public class SignupController extends HttpServlet{
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String role = request.getParameter("role");
 		
 		System.out.println("fn : "+firstName);
 		System.out.println("ls : "+lastName);
@@ -39,7 +41,7 @@ public class SignupController extends HttpServlet{
 		String error = " ";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String role = "developer";
+		
 
 
 		if(firstName == null || firstName.trim().length() == 0)
@@ -98,6 +100,9 @@ public class SignupController extends HttpServlet{
 		                System.out.println("Success: User Registered");
 		                System.out.println();
 		                response.sendRedirect("Login.jsp");
+		                
+		                
+
 		            } else {
 		                request.setAttribute("signupError", "Registration failed. Please try again.");
 		                RequestDispatcher rd = request.getRequestDispatcher("Signup.jsp");
